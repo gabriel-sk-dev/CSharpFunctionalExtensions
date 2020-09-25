@@ -1,6 +1,6 @@
-2.8.1
-Code changes:
-* #206 Add OnSuccessTry returning Task
+2.11.7
+New features:
+* #230 Cache hash code of value objects
 
 Fixed issues:
 * None

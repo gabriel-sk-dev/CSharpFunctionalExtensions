@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace CSharpFunctionalExtensions
 {
     [Serializable]
-    public partial struct Result<T> : IResult, IValue<T>, ISerializable
+    public partial struct Result<T> : IResult<T>, ISerializable
     {
         private readonly ResultCommonLogic<string> _logic;
         public bool IsFailure => _logic.IsFailure;
@@ -30,7 +30,13 @@ namespace CSharpFunctionalExtensions
         void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
             => _logic.GetObjectData(info, this);
 
-        public static implicit operator Result<T>(T value) => Result.Success(value);
+        public static implicit operator Result<T>(T value)
+        {
+            if (value is Result<T> result)
+                return result;
+
+            return Result.Success(value);
+        }
 
         public static implicit operator Result(Result<T> result)
         {
